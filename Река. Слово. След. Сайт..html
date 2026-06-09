@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Наследие Иртыша — культурно-исторический проект</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family: "Trebuchet MS", sans-serif;
+    background: linear-gradient(180deg,#08141f,#10293d,#1f4d63);
+    color:#f3f3f3;
+    overflow-x:hidden;
+}
+
+header{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:40px;
+    position:relative;
+    overflow:hidden;
+}
+
+header::before{
+    content:"";
+    position:absolute;
+    width:140%;
+    height:140%;
+    background:radial-gradient(circle at center, rgba(86,164,214,0.35), transparent 60%);
+    animation: pulse 7s infinite;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1) rotate(0deg);} 
+    50%{transform:scale(1.1) rotate(5deg);} 
+    100%{transform:scale(1) rotate(0deg);} 
+}
+
+.hero{
+    position:relative;
+    z-index:2;
+    max-width:1000px;
+}
+
+.hero h1{
+    font-size:4rem;
+    margin-bottom:20px;
+    text-transform:uppercase;
+    letter-spacing:3px;
+    color:#d9f4ff;
+    text-shadow:0 0 20px rgba(255,255,255,0.3);
+}
+
+.hero p{
+    font-size:1.2rem;
+    line-height:1.8;
+    color:#d4e9f1;
+}
+
+.wave{
+    position:absolute;
+    bottom:0;
+    width:100%;
+}
+
+nav{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:rgba(4,17,29,0.85);
+    backdrop-filter:blur(10px);
+    padding:15px;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+nav ul{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+    list-style:none;
+}
+
+nav a{
+    text-decoration:none;
+    color:#d9f4ff;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+nav a:hover{
+    color:#7fd7ff;
+}
+
+section{
+    padding:90px 10%;
+    position:relative;
+}
+
+.section-title{
+    font-size:2.8rem;
+    margin-bottom:30px;
+    color:#b8e8ff;
+    position:relative;
+}
+
+.section-title::after{
+    content:"";
+    width:120px;
+    height:4px;
+    background:#6dd3ff;
+    position:absolute;
+    left:0;
+    bottom:-10px;
+    border-radius:20px;
+}
+
+.description{
+    line-height:1.9;
+    font-size:1.1rem;
+    margin-bottom:50px;
+    color:#d9e9ef;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:25px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:0.4s;
+    position:relative;
+    backdrop-filter:blur(10px);
+}
+
+.card:hover{
+    transform:translateY(-12px) scale(1.02);
+    box-shadow:0 15px 30px rgba(0,0,0,0.4);
+}
+
+.card img{
+    width:100%;
+    height:260px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:20px;
+}
+
+.card-content h3{
+    margin-bottom:10px;
+    color:#bfefff;
+}
+
+.card-content p{
+    color:#d8e8f0;
+    font-size:0.95rem;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    z-index:2000;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.8);
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.modal-content{
+    background:#0e2435;
+    max-width:850px;
+    width:100%;
+    border-radius:25px;
+    overflow:hidden;
+    animation:appear 0.4s ease;
+}
+
+@keyframes appear{
+    from{transform:scale(0.8);opacity:0;}
+    to{transform:scale(1);opacity:1;}
+}
+
+.modal-content img{
+    width:100%;
+    max-height:450px;
+    object-fit:cover;
+}
+
+.modal-text{
+    padding:30px;
+}
+
+.modal-text h2{
+    margin-bottom:20px;
+    color:#c9f3ff;
+}
+
+.modal-text p{
+    line-height:1.8;
+    color:#e2eef5;
+}
+
+.close{
+    position:absolute;
+    top:25px;
+    right:35px;
+    color:white;
+    font-size:40px;
+    cursor:pointer;
+}
+
+footer{
+    background:#06111b;
+    padding:50px 10%;
+    text-align:center;
+    border-top:1px solid rgba(255,255,255,0.1);
+}
+
+footer p{
+    line-height:1.8;
+    color:#d7e8f3;
+}
+
+.glow-circle{
+    position:absolute;
+    border-radius:50%;
+    background:rgba(120,220,255,0.08);
+    filter:blur(10px);
+    animation:float 10s infinite ease-in-out;
+}
+
+.glow1{
+    width:240px;
+    height:240px;
+    top:10%;
+    right:-60px;
+}
+
+.glow2{
+    width:180px;
+    height:180px;
+    bottom:5%;
+    left:-40px;
+}
+
+@keyframes float{
+    0%{transform:translateY(0px);} 
+    50%{transform:translateY(-30px);} 
+    100%{transform:translateY(0px);} 
+}
+
+@media(max-width:768px){
+.hero h1{
+    font-size:2.3rem;
+}
+
+.section-title{
+    font-size:2rem;
+}
+}
+</style>
+</head>
+<body>
+
+<header>
+    <div class="hero">
+        <h1>Памятные знаки, сооружения, ансамбли и достопримечательные места реки Иртыш</h1>
+        <p>
+            Культурно-историческое наследие Обь-Иртышского бассейна — это отражение истории народов,
+            традиций, архитектуры и памяти поколений. Иртыш объединяет города, культуры и события,
+            которые формировали развитие Сибири и Казахстана. Этот проект создан для сохранения памяти
+            о значимых объектах Иртышского бассейна и популяризации культурного наследия.
+        </p>
+    </div>
+
+    <svg class="wave" viewBox="0 0 1440 320">
+        <path fill="#08141f" fill-opacity="1"
+        d="M0,96L48,128C96,160,192,224,288,245.3C384,267,480,245,576,224C672,203,768,181,864,186.7C960,192,1056,224,1152,218.7C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+    </svg>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#idea">Идея проекта</a></li>
+        <li><a href="#monuments">Памятные знаки</a></li>
+        <li><a href="#buildings">Сооружения</a></li>
+        <li><a href="#ensembles">Ансамбли</a></li>
+        <li><a href="#places">Достопримечательности</a></li>
+    </ul>
+</nav>
+
+<section id="idea">
+<div class="glow-circle glow1"></div>
+<h2 class="section-title">Тема, план и идея проекта</h2>
+<p class="description">
+Проект посвящён исследованию культурно-исторического наследия Обь-Иртышского бассейна.
+Главная цель работы — показать, насколько важен Иртыш для формирования истории,
+архитектуры, культуры и памяти народов, проживающих вдоль реки.
+<br><br>
+Основные направления проекта:
+<br>• изучение памятных знаков и мемориалов;
+<br>• исследование архитектурных сооружений;
+<br>• знакомство с ансамблями и историческими комплексами;
+<br>• сохранение информации о достопримечательных местах Иртышского бассейна.
+<br><br>
+Тема была выбрана потому, что Иртыш является одной из крупнейших рек Евразии,
+объединяющей множество культур и исторических событий. Его наследие представляет
+важную ценность для будущих поколений и требует внимания и сохранения.
+</p>
+</section>
+
+<section id="monuments">
+<div class="glow-circle glow2"></div>
+<h2 class="section-title">Памятные знаки Иртышского бассейна</h2>
+<p class="description">
+Памятные знаки Иртышского бассейна отражают важнейшие исторические события,
+героические подвиги, развитие Сибири и духовную память народов.
+Они создавались в честь исследователей, воинов, переселенцев и значимых событий,
+связанных с освоением территорий вдоль Иртыша. Эти объекты помогают сохранить
+историческую память и символизируют связь поколений.
+</p>
+
+<div class="cards">
+<div class="card" onclick="openModal('modal1')">
+<img src="img/photo_1.jpg" alt="Памятник">
+<div class="card-content">
+<h3>Памятник Ермаку</h3>
+<p>Один из символов освоения Сибири.</p>
+</div>
+</div>
+
+<div class="card" onclick="openModal('modal2')">
+<img src="img/photo_2.jpg" alt="Мемориал">
+<div class="card-content">
+<h3>Скульптурная композиция «Воинам-речникам, погибшим в 1941–1945 гг.»</h3>
+<p>Исторический знак в Омской области.</p>
+</div>
+</div>
+
+<div class="card" onclick="openModal('modal9')">
+<img src="img/photo_3.jpg" alt="Обелиск">
+<div class="card-content">
+<h3>Обелиск исследователям Сибири</h3>
+<p>Символ освоения Прииртышья.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="buildings">
+<h2 class="section-title">Сооружения Иртышского бассейна</h2>
+<p class="description">
+Сооружения Иртышского бассейна являются важной частью истории развития Сибири.
+Мосты, набережные, гидротехнические объекты и исторические постройки создавались
+для развития судоходства, торговли и городской инфраструктуры. Сегодня они являются
+не только инженерными объектами, но и символами единства, движения и развития региона.
+</p>
+
+<div class="cards">
+<div class="card" onclick="openModal('modal3')">
+<img src="img/photo_4.jpg" alt="Мост">
+<div class="card-content">
+<h3>Иртышский мост</h3>
+<p>Крупное инженерное сооружение региона.</p>
+</div>
+</div>
+
+<div class="card" onclick="openModal('modal4')">
+<img src="img/photo_5.jpg" alt="Набережная">
+<div class="card-content">
+<h3>Набережная Иртыша</h3>
+<p>Популярное место отдыха и культуры.</p>
+</div>
+</div>
+
+<div class="card" onclick="openModal('modal10')">
+<img src="img/photo_6.jpg" alt="ГЭС">
+<div class="card-content">
+<h3>Гидротехническое сооружение</h3>
+<p>Важный объект речной инфраструктуры.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="ensembles">
+<h2 class="section-title">Ансамбли Иртышского бассейна</h2>
+<p class="description">
+Архитектурные ансамбли Иртышского бассейна формировались на протяжении нескольких веков.
+Они объединяют исторические здания, площади, соборы и культурные центры,
+создавая единое пространство памяти и традиций. Эти ансамбли символизируют развитие
+городов Прииртышья и сохранение культурной самобытности народов региона.
+</p>
+
+<div class="cards">
+<div class="card" onclick="openModal('modal5')">
+<img src="img/photo_7.jpg" alt="Ансамбль">
+<div class="card-content">
+<h3>Исторический центр Тобольска</h3>
+<p>Архитектурный ансамбль сибирского города.</p>
+</div>
+</div>
+
+<div class="card" onclick="openModal('modal6')">
+<img src="img/photo_8.jpg" alt="Комплекс">
+<div class="card-content">
+<h3>Иртышские ворота Омской крепости</h3>
+<p>Историческая архитектура Иртышского бассейна.</p>
+</div>
+</div>
+
+<div class="card" onclick="openModal('modal11')">
+<img src="img/photo_9.jpg" alt="Собор">
+<div class="card-content">
+<h3>Посад сибирских старожилов</h3>
+<p>Историческое духовное наследие региона.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="places">
+<h2 class="section-title">Достопримечательности Иртышского бассейна</h2>
+<p class="description">
+Достопримечательности Иртышского бассейна объединяют природные красоты,
+исторические места и культурные объекты. Они формировались под влиянием природы,
+истории и жизни людей, проживающих рядом с великой рекой. Эти места символизируют
+богатство и уникальность Обь-Иртышского региона.
+</p>
+
+<div class="cards">
+<div class="card" onclick="openModal('modal7')">
+<img src="img/photo_10.jpg" alt="Природа">
+<div class="card-content">
+<h3>Берега Иртыша</h3>
+<p>Природная красота великой реки.</p>
+</div>
+</div>
+
+<div class="card" onclick="openModal('modal8')">
+<img src="img/photo_11.jpg" alt="Место">
+<div class="card-content">
+<h3>Заповедные территории</h3>
+<p>Уникальные природные зоны бассейна.</p>
+</div>
+</div>
+
+<div class="card" onclick="openModal('modal12')">
+<img src="img/photo_12.jpg" alt="Озеро">
+<div class="card-content">
+<h3>Природные ландшафты Прииртышья</h3>
+<p>Красота природы и экосистем региона.</p>
+</div>
+</div>
+</div>
+</section>
+
+<footer>
+<p>
+Данный сайт — результат работы студента 2 курса группы 21ИСП Ярошенко Игоря Тарасовича под руководством преподавателей и консультантов-наставников.<br><br>
+БПОУ «КИТЭК» | Руководители: Завалий Н.Ф., Наумова А.А., Шертман И.Р.<br>
+Консультанты: Бондарь Н.В., Новикова О.Ю. | 2026
+</p>
+</footer>
+
+<div class="modal" id="modal1">
+<span class="close" onclick="closeModal('modal1')">&times;</span>
+<div class="modal-content">
+<img src="img/photo_1.jpg">
+<div class="modal-text">
+<h2>Памятник Ермаку</h2>
+<p>
+Памятник расположен в Тобольске и посвящён Ермаку Тимофеевичу — казачьему атаману,
+сыгравшему важную роль в освоении Сибири. Монумент был установлен как символ начала
+нового исторического этапа развития региона. Он напоминает о событиях XVI века,
+повлиявших на формирование Иртышского бассейна, и символизирует силу, мужество
+и освоение новых земель.
+</p>
+</div>
+</div>
+</div>
+
+<div class="modal" id="modal2">
+<span class="close" onclick="closeModal('modal2')">&times;</span>
+<div class="modal-content">
+<img src="img/photo_2.jpg">
+<div class="modal-text">
+<h2>Скульптурная композиция «Воинам-речникам, погибшим в 1941–1945 гг.»</h2>
+<p>
+Скульптурная группа, расположенная возле Дворца культуры «Юбилейный»
+(ныне здание «Пятого театра»),символизирует апофеоз «Победы» и состоит
+из 6 фигур моряков и солдат, объединённых знаменем. Первая фигура
+взывает к защите Отечества, вторая — стоять на смерть,
+третья-четвёртая-пятая — борьба и её жертвы, шестая фигура
+символизирует торжество Победы. 
+</p>
+</div>
+</div>
+</div>
+
+<div class="modal" id="modal3">
+<span class="close" onclick="closeModal('modal3')">&times;</span>
+<div class="modal-content">
+<img src="img/photo_4.jpg">
+<div class="modal-text">
+<h2>Иртышский мост</h2>
+<p>
+Мост через Иртыш расположен в в Усть-Каменогорске и является важным
+инженерным сооружением региона. Его строительство стало необходимым этапом развития
+транспортной сети и связи между берегами реки. Мост символизирует объединение территорий,
+развитие экономики и непрерывное движение жизни вдоль Иртыша.
+</p>
+</div>
+</div>
+</div>
+
+<div class="modal" id="modal4">
+<span class="close" onclick="closeModal('modal4')">&times;</span>
+<div class="modal-content">
+<img src="img/photo_5.jpg">
+<div class="modal-text">
+<h2>Набережная Иртыша</h2>
+<p>
+Набережная Иртыша создавалась как место отдыха, прогулок и культурной жизни жителей.
+Со временем она стала одной из главных достопримечательностей региона. Здесь проводятся
+городские мероприятия, фестивали и памятные встречи. Набережная символизирует связь
+человека с рекой и важность Иртыша для жизни городов.
+</p>
+</div>
+</div>
+</div>
+
+<div class="modal" id="modal5">
+<span class="close" onclick="closeModal('modal5')">&times;</span>
+<div class="modal-content">
+<img src="img/photo_7.jpg">
+<div class="modal-text">
+<h2>Исторический центр Тобольска</h2>
+<p>
+Исторический центр Тобольска расположен в Тюменской области и считается одним
+из важнейших культурных комплексов Сибири. Он начал формироваться ещё в XVII веке.
+Архитектурный ансамбль включает старинные здания, площади и Тобольский кремль.
+Этот объект символизирует развитие сибирских городов и сохранение исторической памяти.
+</p>
+</div>
+</div>
+</div>
+
+<div class="modal" id="modal6">
+<span class="close" onclick="closeModal('modal6')">&times;</span>
+<div class="modal-content">
+<img src="img/photo_8.jpg">
+<div class="modal-text">
+<h2>Иртышские ворота Омской крепости</h2>
+<p>
+Один из четырёх въездов в Омскую крепость, выходивший к реке Иртыш. Как и другие
+ворота крепости, они были возведены в 1792 году. Сооружение не пережило советское
+время — в 1928 году ворота серьёзно пострадали от наводнения и вскоре были разобраны.
+В 2010 году, к 300-летию Омска, ворота были восстановлены как точная копия на своём
+историческом фундаменте. Сегодня Иртышские ворота — один из символов города,
+а прилегающая к ним набережная благоустраивается в рамках масштабной реконструкции.
+</p>
+</div>
+</div>
+</div>
+
+<div class="modal" id="modal7">
+<span class="close" onclick="closeModal('modal7')">&times;</span>
+<div class="modal-content">
+<img src="img/photo_10.jpg">
+<div class="modal-text">
+<h2>Берега Иртыша</h2>
+<p>
+Берега Иртыша формировались на протяжении тысячелетий и стали неотъемлемой частью
+природного наследия Сибири. Эти места известны живописными пейзажами,
+богатым растительным миром и особой атмосферой. Они символизируют силу природы,
+жизнь реки и связь человека с окружающей средой.
+</p>
+</div>
+</div>
+</div>
+
+<div class="modal" id="modal8">
+<span class="close" onclick="closeModal('modal8')">&times;</span>
+<div class="modal-content">
+<img src="img/photo_11.jpg">
+<div class="modal-text">
+<h2>Заповедные территории</h2>
+<p>
+Заповедные территории Иртышского бассейна были созданы для охраны уникальной природы,
+редких животных и растений. Они играют важную роль в сохранении экологического баланса региона.
+Эти территории символизируют необходимость бережного отношения к природе и сохранения
+природного наследия для будущих поколений.
+</p>
+</div>
+</div>
+</div>
+
+<script>
+function openModal(id){
+    document.getElementById(id).style.display = 'flex';
+}
+
+function closeModal(id){
+    document.getElementById(id).style.display = 'none';
+}
+
+window.onclick = function(event){
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        if(event.target === modal){
+            modal.style.display = 'none';
+        }
+    });
+}
+</script>
+
+<div class="modal" id="modal9">
+<span class="close" onclick="closeModal('modal9')">&times;</span>
+<div class="modal-content">
+<img src="img/photo_3.jpg">
+<div class="modal-text">
+<h2>Обелиск исследователям Сибири</h2>
+<p>
+Обелиск посвящён исследователям и первооткрывателям Сибири, которые внесли большой вклад
+в развитие территорий Иртышского бассейна. Он символизирует стремление к открытиям,
+мужество и историческую память региона.
+</p>
+</div>
+</div>
+</div>
+
+<div class="modal" id="modal10">
+<span class="close" onclick="closeModal('modal10')">&times;</span>
+<div class="modal-content">
+<img src="img/photo_6.jpg">
+<div class="modal-text">
+<h2>Гидротехническое сооружение</h2>
+<p>
+Гидротехнические сооружения Иртышского бассейна были построены для регулирования воды,
+развития энергетики и обеспечения судоходства. Они символизируют технический прогресс
+и значение Иртыша для экономики региона.
+</p>
+</div>
+</div>
+</div>
+
+<div class="modal" id="modal11">
+<span class="close" onclick="closeModal('modal11')">&times;</span>
+<div class="modal-content">
+<img src="img/photo_9.jpg">
+<div class="modal-text">
+<h2>Посад сибирских старожилов</h2>
+<p>
+Распологается на подножие Чувашского мыса в Тобольске, на берегу Иртыша. Изначально это
+были кино-декорации к фильму «Тобол», но после съемок комплекс был
+передан музею-заповеднику. Это точная реконструкция тобольского посада
+конца XVII — начала XVIII века: деревянные усадьбы, церкви, ветряная
+мельница и пристань. Центральные объекты — усадьбы первого губернатора
+Сибири М. Гагарина и знаменитого картографа С. Ремезова — выполнены с
+высокой исторической достоверностью.
+</p>
+</div>
+</div>
+</div>
+
+<div class="modal" id="modal12">
+<span class="close" onclick="closeModal('modal12')">&times;</span>
+<div class="modal-content">
+<img src="img/photo_12.jpg">
+<div class="modal-text">
+<h2>Природные ландшафты Прииртышья</h2>
+<p>
+Ландшафты Прииртышья формировались веками и являются частью уникального природного наследия.
+Они символизируют гармонию природы, богатство экосистем и красоту великой сибирской реки.
+</p>
+</div>
+</div>
+</div>
+
+</body>
+</html>
